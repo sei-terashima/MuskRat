@@ -16,6 +16,10 @@ public class MazePlayer : MonoBehaviour
             {
                 timeController.ShowStageClearMessage();
             }
+            else
+            {
+                Debug.LogError("TimeController が見つかりません。");
+            }
 
             // OnGoalイベントをトリガー
             MazeManager.OnGoal.Invoke();

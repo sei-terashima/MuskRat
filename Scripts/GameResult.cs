@@ -23,7 +23,7 @@ public class GameResult : MonoBehaviour
     // ゲームクリア時に呼び出されるメソッド
     public void ShowResult(float time)
     {
-        resultText.text = "GAMECLEAR";
+        resultText.text = "GAME CLEAR";
 
         // 時間を分・秒のフォーマットで表示
         TimeSpan timeSpan = TimeSpan.FromSeconds(time);
@@ -37,10 +37,9 @@ public class GameResult : MonoBehaviour
     void OnTitleButtonClicked()
     {
         // タイマーリセットメソッドを呼び出す
-        TimeController.ResetTimerForResult();
+        TimeController.ResetTimer();
 
-
-        // 新しいゲームを開始する
-        GameManager.StartNewGame();
+        // タイトルシーンに遷移
+        SceneManager.LoadScene("Title");
     }
 }

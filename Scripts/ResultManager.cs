@@ -1,25 +1,28 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoBehaviour
 {
-    public float playerTime;  // プレイヤーのタイム
+    public float playerTime; // プレイヤーのタイム
 
     void Start()
     {
-        // 仮のタイムを設定（実際のゲームではこれを取得する）
-        playerTime = 120.5f;
+        // プレイヤーのタイムを仮設定（本来はゲームから受け取る）
+        // ここではテスト用の値を設定しています
+        playerTime = TimeController.GetClearTime(); // 例: TimeController から取得
 
-        // プレイヤーのタイムをPlayerPrefsに保存
-        PlayerPrefs.SetFloat("PlayerTime", playerTime);
-        PlayerPrefs.Save();
+        // ベストタイムをPlayerPrefsから取得（デフォルトは無限大）
+        float bestTime = PlayerPrefs.GetFloat("BestTime", Mathf.Infinity);
 
-        // デバッグログで保存されたタイムを確認
-        Debug.Log("PlayerTime saved: " + playerTime);
-    }
-
-    public void LoadRankingScene()
-    {
-        SceneManager.LoadScene("RankingScene"); // ランキングシーンに遷移
+        // プレイヤータイムがベストタイムより良ければ更新
+        if (playerTime < bestTime)
+        {
+            PlayerPrefs.SetFloat("BestTime", playerTime); // ベストタイムを保存
+            PlayerPrefs.Save();
+            Debug.Log("新しいベストタイムを保存しました: " + playerTime);
+        }
+        else
+        {
+            Debug.Log("ベストタイム更新なし。プレイヤータイム: " + playerTime);
+        }
     }
 }

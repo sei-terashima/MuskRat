@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public static void ResetGame()
     {
         // ここでゲームの状態をリセットする処理を追加します
-        TimeController.ResetTimerForResult();
+        TimeController.ResetTimer();
         // その他、必要なリセット処理を追加
     }
 
