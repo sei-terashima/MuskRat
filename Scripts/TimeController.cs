@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement; // シーン管理に必要
 using TMPro; // TextMeshPro を使用
 
 public class TimeController : MonoBehaviour
@@ -10,7 +11,7 @@ public class TimeController : MonoBehaviour
 
     void Start()
     {
-        ResetTimer(); // ゲーム開始時にタイマーをリセット
+        CheckAndResetTimer(); // シーンに応じてタイマーをリセット
         StartTimer(); // タイマーを開始
     }
 
@@ -24,17 +25,25 @@ public class TimeController : MonoBehaviour
     }
 
     /// <summary>
+    /// シーンを確認してタイマーをリセットする
+    /// </summary>
+    private void CheckAndResetTimer()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // 特定のシーン名でタイマーをリセット
+        if (currentSceneName == "STAGE1") // シーン名を指定
+        {
+            ResetTimer(); // タイマーをリセット
+        }
+    }
+
+    /// <summary>
     /// タイマーをリセットする
     /// </summary>
     public static void ResetTimer()
     {
         elapsedTime = 0; // 経過時間をゼロにリセット
-    }
-
-    // TimeController.cs 内に追加するメソッド
-    public static void ResetTimerForResult()
-    {
-        ResetTimer(); // タイマーリセット処理を呼び出す
     }
 
     /// <summary>
@@ -80,18 +89,4 @@ public class TimeController : MonoBehaviour
             timeText.text = GetFormattedTime(); // フォーマットされた時間を表示
         }
     }
-
-    // TimeController.cs の中に追加するメソッド
-    public void ShowStageClearMessage()
-    {
-        // ステージクリアメッセージを表示する処理
-        Debug.Log("Stage Cleared!");  // 例えば、デバッグ用のメッセージとして表示
-
-        // 実際には、TextMeshPro の Text を使ってメッセージを表示するなどが考えられます
-        if (timeText != null)
-        {
-            timeText.text = "Stage Cleared!";
-        }
-    }
-
 }

@@ -16,6 +16,7 @@ public class MoveToTarget : MonoBehaviour
     // 初期化処理
     void Start()
     {
+
         // NavMeshAgent コンポーネントを取得
         naveMeshAgent = GetComponent<NavMeshAgent>();
     }

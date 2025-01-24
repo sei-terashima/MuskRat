@@ -4,6 +4,7 @@ public class ResultManager : MonoBehaviour
 {
     public float playerTime; // プレイヤーのタイム
 
+
     void Start()
     {
         // プレイヤーのタイムを仮設定（本来はゲームから受け取る）

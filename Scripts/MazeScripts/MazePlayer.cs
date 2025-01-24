@@ -10,17 +10,6 @@ public class MazePlayer : MonoBehaviour
             // ステージクリア時にタイマーを停止
             TimeController.StopTimer();
 
-            // ステージクリアメッセージを表示
-            TimeController timeController = FindObjectOfType<TimeController>();
-            if (timeController != null)
-            {
-                timeController.ShowStageClearMessage();
-            }
-            else
-            {
-                Debug.LogError("TimeController が見つかりません。");
-            }
-
             // OnGoalイベントをトリガー
             MazeManager.OnGoal.Invoke();
         }

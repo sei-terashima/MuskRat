@@ -1,47 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public float currentTime; // 現在のタイム
+    public TextMeshProUGUI currentTimeText; // 現在のタイム表示用UI
+    //public TextMeshProUGUI bestTimeText; // ベストタイム表示用UI
+    public TextMeshProUGUI statusText; // UI表示
+    public static string gameState; // ゲームの状態
+    public GameObject NextButton; //ネクストボタンの表示
 
-    void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
-        // Singleton パターンで GameManager のインスタンスを保持
-        if (instance == null)
+
+        gameState = "playing"; // ゲーム中にする
+
+        Invoke("HideStatusText", 1.0f); // 1秒後にテキストを非表示にする
+
+
+    }
+
+    void HideStatusText()
+    {
+        statusText.gameObject.SetActive(false);
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        //タイマーの更新
+        if (gameState == "playing")
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            NextButton.gameObject.SetActive(false);
+            currentTime += Time.deltaTime;
+            currentTimeText.text = "Time: " + currentTime.ToString("F2");
         }
-        else
+
+        else if (gameState == "gameStop")
         {
-            Destroy(gameObject);
+            NextButton.gameObject.SetActive(true);
+            statusText.GetComponent<TextMeshProUGUI>().text = "STAGE CLEAR!";
         }
     }
-
-    // ゲームをリセットするメソッド
-    public static void ResetGame()
-    {
-        // ここでゲームの状態をリセットする処理を追加します
-        TimeController.ResetTimer();
-        // その他、必要なリセット処理を追加
-    }
-
-    // 新しいゲームを開始するメソッド
-    public static void StartNewGame()
-    {
-        // ゲームの初期設定を行います
-        ResetGame();
-        // 初期のシーンに移動します（例：Stage1）
-        SceneManager.LoadScene("Title");
-    }
-
-    // タイトル画面に戻るメソッド
-    public static void ReturnToTitle()
-    {
-        // タイトルシーンに移動します
-        SceneManager.LoadScene("Title");
-    }
-
 
 }
